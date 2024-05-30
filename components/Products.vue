@@ -2,7 +2,15 @@
   <v-row>
     <v-row>
       <v-col cols="10">
-        <v-autocomplete label="Products" placeholder="Start typing to search">
+        <v-autocomplete
+          label="Products"
+          placeholder="Start typing to search"
+          :search-input.sync="search"
+          :loading="isLoading"
+          :items="itemsSearch"
+          item-text="title"
+          item-value="id"
+        >
         </v-autocomplete>
       </v-col>
       <v-col cols="2">
@@ -174,6 +182,10 @@ export default {
           categoryId: 3,
         },
       ],
+
+      search: null,
+      isLoading: false,
+      itemsSearch: [],
     }
   },
   computed: {
@@ -182,6 +194,19 @@ export default {
         return this.products.filter((s) => s.categoryId == this.categoryId)
       }
       return this.products
+    },
+  },
+
+  watch: {
+    search(val) {
+      console.log(val)
+      this.isLoading = true
+      setTimeout(() => {
+        this.itemsSearch = this.products.filter((e) => {
+          this.isLoading = false
+          return e.title
+        })
+      }, 500)
     },
   },
 }
