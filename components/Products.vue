@@ -1,6 +1,6 @@
 <template>
-  <v-row>
-    <v-row>
+  <section id="product">
+    <v-row align="center">
       <v-col cols="10">
         <v-autocomplete
           label="Products"
@@ -37,7 +37,7 @@
       </v-col>
     </v-row>
 
-    <v-row>
+    <v-row align="center">
       <v-col v-for="(product, index) in filteredProducts" cols="2" :key="index">
         <v-card :title="product.title" :ripple="true">
           <v-card-actions>
@@ -52,7 +52,7 @@
         </v-card>
       </v-col>
     </v-row>
-  </v-row>
+  </section>
 </template>
 
 <script>
