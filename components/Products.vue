@@ -10,6 +10,9 @@
           :items="itemsSearch"
           item-text="title"
           item-value="id"
+          v-model="selectedSearch"
+          return-object
+          hide-no-data
         >
         </v-autocomplete>
       </v-col>
@@ -186,12 +189,20 @@ export default {
       search: null,
       isLoading: false,
       itemsSearch: [],
+      selectedSearch: null,
     }
+  },
+  methods: {
+    resetSearchCategory() {
+      this.categoryId = false
+    },
   },
   computed: {
     filteredProducts() {
       if (this.categoryId) {
         return this.products.filter((s) => s.categoryId == this.categoryId)
+      } else if (this.selectedSearch) {
+        return this.products.filter((s) => s.title == this.selectedSearch.title)
       }
       return this.products
     },
@@ -204,6 +215,7 @@ export default {
       setTimeout(() => {
         this.itemsSearch = this.products.filter((e) => {
           this.isLoading = false
+          this.resetSearchCategory()
           return e.title
         })
       }, 500)
